@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Diabetes Prediction</title>
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: #eaf6f6;
+                margin: 0;
+                padding: 30px;
+            }
+
+            .container {
+                width: 650px;
+                max-width: calc(100% - 60px);
+                margin: 20px auto;
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                text-align: center;
+                color: #087f8c;
+                margin-bottom: 10px;
+            }
+
+            .subtitle {
+                text-align: center;
+                color: #666;
+                margin-bottom: 30px;
+            }
+
+            .form-group {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .field {
+                margin-bottom: 18px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 8px;
+                color: #333;
+                font-weight: bold;
+            }
+
+            input[type="text"] {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 12px;
+                border: 1px solid #ccdada;
+                border-radius: 7px;
+                font-size: 15px;
+            }
+
+            input:focus {
+                outline: none;
+                border-color: #087f8c;
+            }
+
+            input[type="submit"] {
+                width: 100%;
+                padding: 14px;
+                background: #087f8c;
+                color: white;
+                border: none;
+                border-radius: 7px;
+                font-size: 17px;
+                font-weight: bold;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+
+            input[type="submit"]:hover {
+                background: #066570;
+            }
+
+            .output {
+                margin-top: 25px;
+                padding: 18px;
+                background: #f0fafa;
+                border-left: 5px solid #087f8c;
+                border-radius: 7px;
+                text-align: center;
+            }
+
+            .output h2 {
+                color: #087f8c;
+                margin-top: 0;
+            }
+
+            .output h3 {
+                color: #333;
+                margin-bottom: 0;
+            }
+
+            @media (max-width: 700px) {
+                body {
+                    padding: 10px;
+                }
+
+                .container {
+                    width: auto;
+                    max-width: none;
+                    margin: 10px auto;
+                    padding: 20px;
+                }
+
+                .form-group {
+                    grid-template-columns: 1fr;
+                    gap: 0;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <h1>Diabetes Prediction</h1>
+
+            <p class="subtitle">
+                Enter your health details to get a model prediction
+            </p>
+
+            <form action="/predict" method="post">
+
+                <div class="form-group">
+
+                    <div class="field">
+                        <label>Number of Pregnancies</label>
+                        <input type="text" name="num_preg"
+                               value="{{ form_data.get('num_preg', '') if form_data else '' }}"
+                               required>
+                    </div>
+
+                    <div class="field">
+                        <label>Glucose Concentration</label>
+                        <input type="text" name="glucose_conc"
+                               value="{{ form_data.get('glucose_conc', '') if form_data else '' }}"
+                               required>
+                    </div>
+
+                    <div class="field">
+                        <label>Diastolic Blood Pressure</label>
+                        <input type="text" name="diastolic_bp"
+                               value="{{ form_data.get('diastolic_bp', '') if form_data else '' }}"
+                               required>
+                    </div>
+
+                    <div class="field">
+                        <label>Insulin</label>
+                        <input type="text" name="insulin"
+                               value="{{ form_data.get('insulin', '') if form_data else '' }}"
+                               required>
+                    </div>
+
+                    <div class="field">
+                        <label>BMI</label>
+                        <input type="text" name="bmi"
+                               value="{{ form_data.get('bmi', '') if form_data else '' }}"
+                               required>
+                    </div>
+
+                    <div class="field">
+                        <label>Diabetes Pedigree Function</label>
+                        <input type="text" name="diab_pred"
+                               value="{{ form_data.get('diab_pred', '') if form_data else '' }}"
+                               required>
+                    </div>
+
+                    <div class="field">
+                        <label>Age</label>
+                        <input type="text" name="age"
+                               value="{{ form_data.get('age', '') if form_data else '' }}"
+                               required>
+                    </div>
+
+                    <div class="field">
+                        <label>Skin Thickness</label>
+                        <input type="text" name="skin"
+                               value="{{ form_data.get('skin', '') if form_data else '' }}"
+                               required>
+                    </div>
+
+                </div>
+
+                <input type="submit" value="Predict">
+
+            </form>
+
+            {% if prediction_text %}
+                <div class="output">
+                    <h2>Prediction Output</h2>
+                    <h3>{{ prediction_text }}</h3>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </body>
+</html>
